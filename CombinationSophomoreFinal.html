@@ -1,0 +1,168 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Final Project</title>
+<style>
+.sidebar {
+  height: 700px;
+  width: 20%;
+  background-color: #808080;
+  float: left;
+  border:  solid 5px #FFFF00;
+}
+
+#reportArea {
+  overflow: auto;
+  orientation: center;
+  background-color: #334FFF;
+  width: 78%;
+  height: 700px;
+  float: right;
+  border:  solid 5px #FFFF00;
+}
+</style>
+</head>
+
+<body>
+  <div class="sidebar">
+    <br><br><b>To create a new user:</b> <br><br>
+    <form action="javascript:some1();" method="get">
+    Type in a new username: <input type="text" name="username" id="username">
+    <br>
+    Type in a new password: <input type="text" name="passpass" id="passpass">
+    <br>
+    Type in a new email: <input type="text" name="email" id="email">
+    <br>
+    Type in a new first name: <input type="text" name="firstName" id="firstName">
+    <br>
+    Type in a new last name: <input type="text" name="lastName" id="lastName">
+    <br>
+    <input type="submit">
+    <br><br>
+    </form>
+
+    <b>To create a new message:</b><br><br>
+    <form action="javascript:some2();" method="GET">
+    What is the subject of this message: <input type="text" name="Subject" id="Subject">
+    <br>
+    Type in a new message: <input type="textarea" name="Message" id="Message">
+    <br>
+    Please tell us who this is for: <input type="text" name="Reciever" id="Reciever">
+    <br>
+    And what is your name? <input type="text" name="Sender" id="Sender">
+    <br>
+    <input type="submit">
+    <br><br>
+    </form>
+
+    <b>To check your existing messages:</b><br><br>
+    <form action="javascript:some3();" method="GET">
+      Username: <input type="text" name="nombre" id="nombre"></input>
+      <br>
+      <input type="submit"></input>
+      <br><br>
+    </form>
+
+    <b>To check messages you have sent:</b><br><br>
+    <form action="javascript:some4();" method="GET">
+      Username: <input type="text" name="nombre" id="nombre"></input>
+      <br>
+      <input type="submit"></input>
+    </form>
+  </div>
+  </div>
+
+  <div id="reportArea"><b>Please enter information in the sidebar for assistance.</b></div>
+
+    <script>
+    function some1() {
+      //start the url with the name of the php page
+      var url = "Insert.php";
+
+      //get the value from the form element, accessed by the HTML ID attribute
+      var data1 = document.getElementById("username").value;
+      var data2 = document.getElementById("passpass").value;
+      var data3 = document.getElementById("email").value;
+      var data4 = document.getElementById("firstName").value;
+      var data5 = document.getElementById("lastName").value;
+
+      //append the property-value (or key-value) pair as a query string
+      url += "?username=" + data1 + "&passpass=" + data2 + "&email=" + data3 +
+          "&firstName=" + data4 + "&lastName=" + data5;
+
+      //call the httpGetAsync function with some call back that will display the results
+      httpGetAsync( url, showResults );
+
+    }
+
+    function some2() {
+      //start the url with the name of the php page
+      var url = "MessageCreation.php";
+
+      //get the value from the form element, accessed by the HTML ID attribute
+      var data1 = document.getElementById("Subject").value;
+      var data2 = document.getElementById("Message").value;
+      var data3 = document.getElementById("Reciever").value;
+      var data4 = document.getElementById("Sender").value;
+
+      //append the property-value (or key-value) pair as a query string
+      url += "?Subject=" + data2 + "&Message=" + data3 + "&Reciever=" + data3 + "&Sender=" + data4;
+
+      //call the httpGetAsync function with some call back that will display the results
+      httpGetAsync( url, showResults );
+
+    }
+
+    function some3() {
+      //start the url with the name of the php page
+      var url = "MessageCheck.php";
+
+      //get the value from the form element, accessed by the HTML ID attribute
+      var data = document.getElementById("nombre").value;
+
+      //append the property-value (or key-value) pair as a query string
+      url += "?user=" + data;
+
+      //call the httpGetAsync function with some call back that will display the results
+      httpGetAsync( url, showResults );
+
+    }
+
+    function some4() {
+      //start the url with the name of the php page
+      var url = "MessageSent.php";
+
+      //get the value from the form element, accessed by the HTML ID attribute
+      var data = document.getElementById("nombre").value;
+
+      //append the property-value (or key-value) pair as a query string
+      url += "?user=" + data;
+
+      //call the httpGetAsync function with some call back that will display the results
+      httpGetAsync( url, showResults );
+
+    }
+
+    function showResults( responseText ) {
+      document.getElementById("reportArea").innerHTML = responseText;
+    }
+
+      /*Here is that one function that you would have
+      * just copied and pasted into your work anyways...right?
+      */
+      function httpGetAsync(theUrl, callbackWhenPageLoaded) {
+        var xmlHttp = new XMLHttpRequest();
+
+        xmlHttp.onreadystatechange = function() {
+          if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callbackWhenPageLoaded(xmlHttp.responseText);
+        }
+
+        xmlHttp.open("GET", theUrl, true);
+        xmlHttp.send(null);
+      }
+    </script>
+
+</body>
